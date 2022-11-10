@@ -15,7 +15,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Paper from '@mui/material/Paper/Paper';
 import LoginIcon from '@mui/icons-material/Login';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Add } from '@mui/icons-material';
 import {
     Search,
@@ -23,8 +23,6 @@ import {
     SearchIconWrapper,
     StyledInputBase,
 } from '../StyledComponentItem/StyledItem';
-
-
 
 
 export default function PrimarySearchAppBar() {
@@ -133,13 +131,21 @@ export default function PrimarySearchAppBar() {
     );
 
     return (
-        <Paper elevation={12} sx={{ marginBottom: "1rem", position: "fixed" }}>
-            <Box sx={{ flexGrow: 1, }}>
-                <AppBar >
+        <Paper elevation={12}
+            sx={{
+                marginBottom: "1rem",
+            }}>
+            <Box sx={{
+                flexGrow: 1,
+                margin: "2% auto",
+            }}>
+                <AppBar>
                     <Toolbar sx={{
                         display: "flex",
                         justifyContent: "space-between",
-                        alignItems: "center"
+                        alignItems: "center",
+                        position: "sticky",
+                        // backgroundColor: "#eee"
                     }}>
                         <Box sx={{
                             display: "flex",
@@ -182,9 +188,14 @@ export default function PrimarySearchAppBar() {
                             <TypographyLink to="/profile/add">
                                 <IconButton size="large" aria-label="">
                                     <Add
-                                        sx={{ color: "#fff" }} />
+                                        sx={{
+                                            color: "#fff"
+                                        }}
+                                    />
                                 </IconButton>
                             </TypographyLink>
+
+                            {/* 
                             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                                 <Badge badgeContent={4} color="error">
                                     <MailIcon />
@@ -200,7 +211,9 @@ export default function PrimarySearchAppBar() {
                                     <NotificationsIcon />
                                 </Badge>
                             </IconButton>
-                            <NavLink to="/auth/login">
+                             */}
+
+                            <Link to="/auth/login">
                                 <IconButton
                                     size="large"
                                     edge="end"
@@ -212,7 +225,7 @@ export default function PrimarySearchAppBar() {
                                 >
                                     <LoginIcon sx={{ color: "#fff" }} />
                                 </IconButton>
-                            </NavLink>
+                            </Link>
 
                             <IconButton
                                 size="large"

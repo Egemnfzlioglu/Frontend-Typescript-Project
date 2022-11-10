@@ -10,21 +10,24 @@ import Paper from '@mui/material/Paper';
 
 
 export const PageContainer = styled(Container)`
-width:100%;
-min-height:65vh;
+width: 100%;
+min-height:60vh;
 display: flex;
 justify-content:center;
 align-items: center;
-margin:2rem auto;
+margin:2rem auto 0 auto ;
 
 `
 
 export const PaperContainer = styled(Paper)`
 width: 100%;
-min-height: 65vh;
+border-bottom: 3px solid #ddd;
+margin: 7% auto 0 auto ;
 display: flex;
-margin: 7% 0 1% 0;
 flex-direction: column;
+padding:0 0 1rem 0;
+border-radius:0.75rem;
+
 
 `
 
@@ -37,14 +40,14 @@ width: 100%;
 `
 
 export const ProfilePage = styled(Box)`
-display: flex;
+min-width: 100%;
 
 `
 
 export const FormHeader = styled(Box)`
-width: 75%;
+min-width: 100%;
 border-bottom: 3px solid #ddd;
-margin:0.75rem auto;
+margin:0.5rem auto;
 
 `
 
@@ -60,13 +63,14 @@ display: flex;
 justify-content:center;
 flex-direction:column;
 align-items: center;
-margin:0.75rem auto;
+margin:0.5rem auto 0 auto;
 
 `
 
 export const InputText = styled(TextField)`
 width: 65%;
 margin:0.5rem auto;
+
 
 `
 

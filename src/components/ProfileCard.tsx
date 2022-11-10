@@ -1,55 +1,74 @@
 import * as React from 'react';
-// import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Delete from '@mui/icons-material/Delete';
-import Edit from '@mui/icons-material/Edit';
-import Paper from '@mui/material/Paper/Paper';
+import Paper from '@mui/material/Paper';
+import { Delete, Edit } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 
+type abc = {
+    i: number;
+    a: string
+}
 
-const ProfileCard = () => {
+const ProfileCard: React.FC<abc> = ({ i, a }) => {
     return (
         <>
-            <Paper elevation={3}
+            <Paper elevation={12}
                 sx={{
-                    borderRadius: ".75rem"
+                    margin: "1rem",
+                    borderRadius: ".75rem",
                 }}>
                 <Card sx={{
                     maxWidth: {
                         xs: 345, md: 500
                     },
-                    borderRadius: ".75rem"
+                    borderRadius: ".75rem",
                 }}>
+                    <Typography variant="subtitle1" color="text.secondary"
+                        sx={{
+                            padding: "0 1.5rem ",
+                        }}
+                    >
+                        September 14, 2016
+                    </Typography>
+                    {/*  */}
                     <CardMedia
                         component="img"
                         height="auto"
                         image="https://mymodernmet.com/wp/wp-content/uploads/2019/07/will-burrard-lucas-beetlecam-23.jpg"
-                        alt="Paella dish"
                         sx={{
-                            padding: ".5rem",
+                            padding: "0.5rem",
+                            width: "100%",
                         }}
+                        alt="Paella dish"
                     />
                     {/*  */}
                     <CardActions disableSpacing
                         sx={{
-                            margin: "-1rem 0",
+                            margin: "-0.5rem auto"
                         }}
                     >
-                        <IconButton aria-label="add to favorites" >
+                        <IconButton aria-label="share"
+                            onClick={() => window.confirm("Emin Misin?")}
+                        >
                             <Delete />
                         </IconButton>
-                        <Link to={`/edit`}
-                            style={{
-                                marginLeft: "auto"
-                            }}>
-                            <IconButton aria-label="share"
-                            >
+
+                        <Typography variant="overline" color="text.secondary"
+                            sx={{
+                                margin: "-1rem auto",
+                                fontSize: "0.8rem",
+
+                            }}
+                        >23 person liked</Typography>
+                        <Link to={`/profile/edit/${i}`}>
+
+                            <IconButton aria-label="edit">
                                 <Edit />
                             </IconButton>
                         </Link>
@@ -58,11 +77,12 @@ const ProfileCard = () => {
                     {/*  */}
                     <CardContent>
                         <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a fun meal to cook...
+                            {`${a}  `}
+                            This impressive paella is a perfect party dish and a fun meal to cook
+                            together with your guests...
                         </Typography>
                     </CardContent>
                     {/*  */}
-
                 </Card >
             </Paper>
         </>

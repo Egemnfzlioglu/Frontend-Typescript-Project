@@ -57,11 +57,7 @@ const CardsAdd = () => {
         <>
             <PageContainer maxWidth="md">
                 <CssBaseline />
-                <PaperContainer elevation={6}
-                    sx={{
-                        margin: "8% 0",
-                    }}
-                >
+                <PaperContainer elevation={6}>
                     <PageForm
                         component="form"
                         onSubmit={(e) => handleOnSubmit(e)}

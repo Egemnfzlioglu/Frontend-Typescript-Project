@@ -45,7 +45,6 @@ const initialValues = {
 }
 
 const Register = () => {
-
     const formik = useFormik({
         initialValues,
         validationSchema,

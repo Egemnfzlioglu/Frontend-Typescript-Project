@@ -10,19 +10,19 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import Paper from '@mui/material/Paper/Paper';
+import Paper from '@mui/material/Paper';
 
+type abc = {
+    i: number;
+    a: string
+}
 
-
-const Cards = () => {
-
-
+const Cards: React.FC<abc> = ({ i, a }) => {
     return (
         <>
             <Paper elevation={12}
                 sx={{
-                    margin: " 0 1rem 1rem 1rem",
+                    margin: "1rem",
                     borderRadius: ".75rem",
                 }}>
                 <Card sx={{
@@ -37,7 +37,6 @@ const Cards = () => {
                                 R
                             </Avatar>
                         }
-
                         title="Shrimp and Chorizo Paella"
                         subheader="September 14, 2016"
                     />
@@ -53,13 +52,18 @@ const Cards = () => {
                         alt="Paella dish"
                     />
                     {/*  */}
-                    <CardActions disableSpacing >
-                        <IconButton aria-label="add to favorites" >
+                    <CardActions disableSpacing
+                        sx={{
+                            margin: "-0.5rem auto"
+                        }}
+                    >
+                        <Typography variant="overline" color="text.secondary"
+                            sx={{
+                                marginLeft: "auto"
+                            }}
+                        >You and 23 person liked</Typography>
+                        <IconButton aria-label="share">
                             <FavoriteIcon />
-                        </IconButton>
-                        <Typography variant="body2" color="text.secondary">You and 23 person liked</Typography>
-                        <IconButton aria-label="share" sx={{ marginLeft: "auto" }}>
-                            <ShareIcon />
                         </IconButton>
                     </CardActions>
                     {/*  */}

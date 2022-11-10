@@ -3,6 +3,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Cards from '../components/Cards';
 import Stack from '@mui/material/Stack';
+import { Grid } from '@mui/material';
+
+
+
 
 const Home = () => {
     return (
@@ -11,26 +15,32 @@ const Home = () => {
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={{ xs: 1, sm: 2, md: 4 }}
                 sx={{
-                    padding: "1.5rem",
-                    margin: "6% 0 1% 0",
+                    width: "100% ",
+                    margin: "5% auto 2% auto",
+                    display: "flex",
                 }}
             >
-                <Box sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}>
-                    <CssBaseline />
-
-                    <Cards />
-                    <Cards />
-                    <Cards />
-                    <Cards />
-                    <Cards />
-                    <Cards />
-                    <Cards />
-                    <Cards />
+                <CssBaseline />
+                <Box
+                    sx={{
+                        width: "90% ",
+                        display: "flex",
+                        margin: "2% auto 0 auto",
+                        flexWrap: "wrap",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    {
+                        Array(3).fill("abc").map((a, i) => (
+                            <Grid key={i} item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                            >
+                                <Cards i={i} a={a} />
+                            </Grid>
+                        ))
+                    }
 
                 </Box>
             </Stack>

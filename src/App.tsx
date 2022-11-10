@@ -20,10 +20,11 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="auth/login" element={<Login />} />
-          <Route path="auth/register" element={<Register />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="profile/add" element={<CardAdd />} />
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/add" element={<CardAdd />} />
+          <Route path="/profile/edit/:id" element={<CardAdd />} />
 
 
 
