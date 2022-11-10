@@ -1,6 +1,8 @@
 import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import SendIcon from '@mui/icons-material/Send';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import {
     InputText,
     Typographies,
@@ -9,14 +11,17 @@ import {
     TypographyLink,
     PageForm,
     FormHeader,
+    PageChangeBox,
+    PaperContainer
 } from '../StyledComponentItem/StyledItem';
-import Paper from '@mui/material/Paper';
-import { useFormik } from 'formik';
-import Box from '@mui/material/Box';
-import * as Yup from 'yup';
+
 
 const validationSchema = Yup.object({
-    name: Yup.string()
+    firstName: Yup.string()
+        .min(3, 'Must be 3 characters or less')
+        .max(30, 'Must be 30 characters or less')
+        .required('Required'),
+    lastName: Yup.string()
         .min(3, 'Must be 3 characters or less')
         .max(30, 'Must be 30 characters or less')
         .required('Required'),
@@ -31,16 +36,9 @@ const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Required'),
 })
 
-// 
-// interface ValueProps {
-//     name: string;
-//     email: string;
-//     password: string;
-//     confirmPassword: string;
-// }
-
 const initialValues = {
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -58,22 +56,21 @@ const Register = () => {
 
     const { handleBlur, handleChange, handleSubmit, values, errors, touched } = formik
 
-    console.log(formik);
+    const touch = touched && errors
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        handleSubmit();
+    }
 
     return (
         <>
             <PageContainer maxWidth="md">
                 <CssBaseline />
-                <Paper elevation={6}
-                    sx={{
-                        width: "100%",
-                        height: "100%",
-                    }}
-                >
+                <PaperContainer elevation={6}>
                     <PageForm
                         component="form"
-                        onSubmit={(e) => handleSubmit()}
-
+                        onSubmit={(e) => handleOnSubmit(e)}
                     >
                         <FormHeader>
                             <Typographies variant="h4">REGISTER</Typographies>
@@ -81,17 +78,32 @@ const Register = () => {
                         <InputText
                             required
                             size="small"
-                            label="Name"
-                            name="name"
-                            id="name"
-                            type="name"
+                            label="First Name"
+                            name="firstName"
+                            id="firstName"
+                            type="text"
                             onChange={handleChange}
-                            value={values.name}
+                            value={values.firstName}
                             onBlur={handleBlur}
-                            helperText={touched.name && errors.name}
+                            helperText={touch.firstName}
                             // error={true}
-                            placeholder="Please Enter Your Name..."
+                            placeholder="Please Enter Your First Name..."
                         />
+                        <InputText
+                            required
+                            size="small"
+                            label="Last Name"
+                            name="lastName"
+                            id="lastName"
+                            type="text"
+                            onChange={handleChange}
+                            value={values.lastName}
+                            onBlur={handleBlur}
+                            helperText={touch.lastName}
+                            // error={true}
+                            placeholder="Please Enter Your Last Name..."
+                        />
+
                         <InputText
                             required
                             size="small"
@@ -101,7 +113,7 @@ const Register = () => {
                             onChange={handleChange}
                             value={values.email}
                             onBlur={handleBlur}
-                            helperText={touched.email && errors.email}
+                            helperText={touch.email}
                             // error={true}
                             placeholder="Please Enter Your Email Address..."
                         />
@@ -114,7 +126,7 @@ const Register = () => {
                             onChange={handleChange}
                             value={values.password}
                             onBlur={handleBlur}
-                            helperText={touched.password && errors.password}
+                            helperText={touch.password}
                             // error={true}
                             placeholder="Please Enter Your Password..."
                         />
@@ -128,25 +140,20 @@ const Register = () => {
                             onChange={handleChange}
                             value={values.confirmPassword}
                             onBlur={handleBlur}
-                            helperText={touched.confirmPassword && errors.confirmPassword}
+                            helperText={touch.confirmPassword}
                             // error
                             placeholder="Please Enter Your Confirm Password..."
                         />
-                        <Box component="p"
-                            sx={{
-                                width: "65%",
-                                margin: "1rem auto"
-                            }}>
+                        <PageChangeBox component="p">
                             <TypographyLink to="/auth/login">
                                 Login
                             </TypographyLink>
-                        </Box>
-
+                        </PageChangeBox>
                         <FormButton variant="contained" type="submit" endIcon={<SendIcon />}>
                             Send
                         </FormButton>
                     </PageForm>
-                </Paper>
+                </PaperContainer>
             </PageContainer>
         </>
     )

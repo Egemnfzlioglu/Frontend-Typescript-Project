@@ -1,6 +1,9 @@
 import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import SendIcon from '@mui/icons-material/Send';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { PaperContainer } from '../StyledComponentItem/StyledItem';
 import {
     InputText,
     Typographies,
@@ -9,27 +12,25 @@ import {
     TypographyLink,
     PageForm,
     FormHeader,
+    PageChangeBox,
 } from '../StyledComponentItem/StyledItem';
-import Paper from '@mui/material/Paper';
-import { useFormik } from 'formik';
-import Box from '@mui/material/Box';
-import * as Yup from 'yup';
+
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Required'),
     password: Yup.string()
-        .max(15, 'Must be 15 characters or less')
         .required('Required'),
-
 })
+
+const initialValues = {
+    email: "",
+    password: "",
+}
 
 const Login = () => {
 
-    const { values, handleChange, handleSubmit, handleBlur, errors, touched } = useFormik({
-        initialValues: {
-            email: '',
-            password: '',
-        },
+    const formik = useFormik({
+        initialValues,
         validationSchema,
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
@@ -37,24 +38,27 @@ const Login = () => {
         },
     });
 
+    const { handleBlur, handleChange, handleSubmit, values, errors, touched } = formik
+
+    const touch = touched && errors
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        handleSubmit();
+    }
+
     return (
         <>
             <PageContainer maxWidth="md">
                 <CssBaseline />
-                <Paper elevation={6}
-                    sx={{
-                        width: "100%",
-                        height: "100%",
-                    }}
-                >
+                <PaperContainer elevation={6}>
                     <PageForm
                         component="form"
-                        onSubmit={() => handleSubmit()}
+                        onSubmit={(e) => handleOnSubmit(e)}
                     >
                         <FormHeader >
                             <Typographies variant="h4">LOGIN</Typographies>
                         </FormHeader>
-
                         <InputText
                             required
                             size="small"
@@ -65,7 +69,8 @@ const Login = () => {
                             onChange={handleChange}
                             value={values.email}
                             onBlur={handleBlur}
-                            helperText={touched.email && errors.email}
+                            helperText={touch.email}
+                            // error={true}
                             placeholder="Please Enter Your Email Address..."
                         />
                         <InputText
@@ -78,24 +83,20 @@ const Login = () => {
                             onChange={handleChange}
                             value={values.password}
                             onBlur={handleBlur}
-                            helperText={touched.password && errors.password}
+                            helperText={touch.password}
                             // error={true}
                             placeholder="Please Enter Your Password..."
                         />
-                        <Box component="p" sx={{
-                            width: "65%",
-                            margin: "1rem auto"
-                        }} >
+                        <PageChangeBox component="p"  >
                             <TypographyLink to="/auth/register">
                                 Register
                             </TypographyLink>
-                        </Box>
+                        </PageChangeBox>
                         <FormButton variant="contained" type="submit" endIcon={<SendIcon />}>
                             Send
                         </FormButton>
                     </PageForm>
-
-                </Paper>
+                </PaperContainer>
             </PageContainer>
         </>
     )

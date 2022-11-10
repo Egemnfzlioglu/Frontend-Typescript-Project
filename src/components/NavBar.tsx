@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -18,46 +16,16 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Paper from '@mui/material/Paper/Paper';
 import LoginIcon from '@mui/icons-material/Login';
 import { Link, NavLink } from 'react-router-dom';
+import { Add } from '@mui/icons-material';
+import {
+    Search,
+    TypographyLink,
+    SearchIconWrapper,
+    StyledInputBase,
+} from '../StyledComponentItem/StyledItem';
 
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-    },
-}));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '30ch',
-        },
-    },
-}));
 
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -101,7 +69,11 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <TypographyLink to="/profile">
+                <MenuItem onClick={handleMenuClose}>
+                    Profile
+                </MenuItem>
+            </TypographyLink>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
@@ -131,6 +103,7 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
+
             <MenuItem>
                 <IconButton
                     size="large"
@@ -143,6 +116,7 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <p>Notifications</p>
             </MenuItem>
+
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     size="large"
@@ -159,11 +133,19 @@ export default function PrimarySearchAppBar() {
     );
 
     return (
-        <Paper elevation={12} sx={{ marginBottom: "2rem" }}>
+        <Paper elevation={12} sx={{ marginBottom: "1rem", position: "fixed" }}>
             <Box sx={{ flexGrow: 1, }}>
-                <AppBar position="static">
-                    <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} >
+                <AppBar >
+                    <Toolbar sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}>
+                        <Box sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center"
+                        }} >
 
                             <IconButton
                                 size="large"
@@ -197,11 +179,18 @@ export default function PrimarySearchAppBar() {
                         </Search>
                         {/* <Box sx={{ flexGrow: 1 }} /> */}
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                            <TypographyLink to="/profile/add">
+                                <IconButton size="large" aria-label="">
+                                    <Add
+                                        sx={{ color: "#fff" }} />
+                                </IconButton>
+                            </TypographyLink>
                             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                                 <Badge badgeContent={4} color="error">
                                     <MailIcon />
                                 </Badge>
                             </IconButton>
+
                             <IconButton
                                 size="large"
                                 aria-label="show 17 new notifications"

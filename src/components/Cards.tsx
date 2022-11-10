@@ -22,14 +22,14 @@ const Cards = () => {
         <>
             <Paper elevation={12}
                 sx={{
-                    margin: "1rem",
-                    borderRadius: ".75rem"
+                    margin: " 0 1rem 1rem 1rem",
+                    borderRadius: ".75rem",
                 }}>
                 <Card sx={{
                     maxWidth: {
                         xs: 345, md: 500
                     },
-                    borderRadius: ".75rem"
+                    borderRadius: ".75rem",
                 }}>
                     <CardHeader
                         avatar={
@@ -45,8 +45,11 @@ const Cards = () => {
                     <CardMedia
                         component="img"
                         height="auto"
-                        sx={{ padding: "10px" }}
                         image="https://mymodernmet.com/wp/wp-content/uploads/2019/07/will-burrard-lucas-beetlecam-23.jpg"
+                        sx={{
+                            padding: "1rem",
+                            width: "100%",
+                        }}
                         alt="Paella dish"
                     />
                     {/*  */}
@@ -68,7 +71,6 @@ const Cards = () => {
                         </Typography>
                     </CardContent>
                     {/*  */}
-
                 </Card >
             </Paper>
         </>
