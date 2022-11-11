@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import SendIcon from '@mui/icons-material/Send';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { PaperContainer } from '../StyledComponentItem/StyledItem';
 import {
     InputText,
     Typographies,
@@ -13,12 +12,21 @@ import {
     PageForm,
     FormHeader,
     PageChangeBox,
+    PaperContainer,
 } from '../StyledComponentItem/StyledItem';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../features/createThunk/authResponseThunk';
+import { toastError } from '../toast/toast';
 
 
 const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email address').required('Required'),
+    email: Yup.string()
+        .trim()
+        .email('Invalid email address')
+        .required('Required'),
     password: Yup.string()
+        .trim()
         .required('Required'),
 })
 
@@ -29,23 +37,32 @@ const initialValues = {
 
 const Login = () => {
 
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+    const { error, status } = useAppSelector((state) => state.auth)
+
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-            console.log(JSON.stringify(values, null, 2));
+        onSubmit: (values, { resetForm }) => {
+            if (values.email && values.password) {
+                dispatch(login({ values, navigate }))
+            }
+            resetForm()
+            error.message = null
         },
     });
 
     const { handleBlur, handleChange, handleSubmit, values, errors, touched } = formik
 
-    const touch = touched && errors
-
     const handleOnSubmit = (e: React.FormEvent<HTMLDivElement>) => {
         e.preventDefault();
         handleSubmit();
     }
+
+    useEffect(() => {
+        error.message && toastError(`${error.message}`)
+    }, [error])
 
     return (
         <>
@@ -69,8 +86,8 @@ const Login = () => {
                             onChange={handleChange}
                             value={values.email}
                             onBlur={handleBlur}
-                            helperText={touch.email}
-                            // error={true}
+                            helperText={touched.email && errors.email}
+                            error={touched.email && errors.email ? true : false}
                             placeholder="Please Enter Your Email Address..."
                         />
                         <InputText
@@ -83,16 +100,19 @@ const Login = () => {
                             onChange={handleChange}
                             value={values.password}
                             onBlur={handleBlur}
-                            helperText={touch.password}
-                            // error={true}
+                            helperText={touched.password && errors.password}
+                            error={touched.password && errors.password ? true : false}
                             placeholder="Please Enter Your Password..."
                         />
-                        <PageChangeBox component="p"  >
+                        <PageChangeBox component="p">
+                            Don't Have an Account ?{" "}
                             <TypographyLink to="/auth/register">
-                                Register
+                                Sign Up
                             </TypographyLink>
                         </PageChangeBox>
-                        <FormButton variant="contained" type="submit" endIcon={<SendIcon />}>
+                        <FormButton variant="contained"
+                            disabled={status === "loading"}
+                            type="submit" endIcon={<SendIcon />}>
                             Send
                         </FormButton>
                     </PageForm>

@@ -22,14 +22,14 @@ const Cards: React.FC<abc> = ({ i, a }) => {
         <>
             <Paper elevation={12}
                 sx={{
-                    margin: "1rem",
+                    margin: "1rem auto",
                     borderRadius: ".75rem",
                 }}>
                 <Card sx={{
                     maxWidth: {
                         xs: 345, md: 500
                     },
-                    borderRadius: ".75rem",
+                    borderRadius: "1rem",
                 }}>
                     <CardHeader
                         avatar={
@@ -48,6 +48,8 @@ const Cards: React.FC<abc> = ({ i, a }) => {
                         sx={{
                             padding: "1rem",
                             width: "100%",
+                            borderRadius: "2rem"
+
                         }}
                         alt="Paella dish"
                     />

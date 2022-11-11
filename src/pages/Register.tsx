@@ -14,26 +14,36 @@ import {
     PageChangeBox,
     PaperContainer
 } from '../StyledComponentItem/StyledItem';
+import { register } from '../features/createThunk/authResponseThunk';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useNavigate } from 'react-router-dom';
 
 
 const validationSchema = Yup.object({
     firstName: Yup.string()
+        .trim()
         .min(3, 'Must be 3 characters or less')
         .max(30, 'Must be 30 characters or less')
         .required('Required'),
     lastName: Yup.string()
+        .trim()
         .min(3, 'Must be 3 characters or less')
         .max(30, 'Must be 30 characters or less')
         .required('Required'),
     password: Yup.string()
+        .trim()
         .min(8, 'Must be 8 characters or less')
         .max(255, 'Must be 255 characters or less')
         .required('Required'),
     confirmPassword: Yup.string()
+        .trim()
         .min(8, 'Must be 8 characters or less')
         .max(255, 'Must be 255 characters or less')
         .required('Required'),
-    email: Yup.string().email('Invalid email address').required('Required'),
+    email: Yup.string()
+        .trim()
+        .email('Invalid email address')
+        .required('Required'),
 })
 
 const initialValues = {
@@ -45,17 +55,31 @@ const initialValues = {
 }
 
 const Register = () => {
+
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const { error } = useAppSelector((state) => state.auth)
+
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: (values, { resetForm }) => {
+            const { firstName, lastName, email, password } = values
+
+            const value = { firstName, lastName, email, password }
+
+            if (firstName && lastName && email && password) {
+                dispatch(register({ value, navigate }))
+            }
+            resetForm()
+            error.message = null
+            console.log(JSON.stringify({
+                firstName, lastName, email, password
+            }, null, 2));
         },
     });
 
     const { handleBlur, handleChange, handleSubmit, values, errors, touched } = formik
-
-    const touch = touched && errors
 
     const handleOnSubmit = (e: React.FormEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -84,8 +108,8 @@ const Register = () => {
                             onChange={handleChange}
                             value={values.firstName}
                             onBlur={handleBlur}
-                            helperText={touch.firstName}
-                            // error={true}
+                            helperText={touched.firstName && errors.firstName}
+                            error={touched.firstName && errors.firstName ? true : false}
                             placeholder="Please Enter Your First Name..."
                         />
                         <InputText
@@ -98,11 +122,10 @@ const Register = () => {
                             onChange={handleChange}
                             value={values.lastName}
                             onBlur={handleBlur}
-                            helperText={touch.lastName}
-                            // error={true}
+                            helperText={touched.lastName && errors.lastName}
+                            error={touched.lastName && errors.lastName ? true : false}
                             placeholder="Please Enter Your Last Name..."
                         />
-
                         <InputText
                             required
                             size="small"
@@ -112,8 +135,8 @@ const Register = () => {
                             onChange={handleChange}
                             value={values.email}
                             onBlur={handleBlur}
-                            helperText={touch.email}
-                            // error={true}
+                            helperText={touched.email && errors.email}
+                            error={touched.email && errors.email ? true : false}
                             placeholder="Please Enter Your Email Address..."
                         />
                         <InputText
@@ -125,8 +148,12 @@ const Register = () => {
                             onChange={handleChange}
                             value={values.password}
                             onBlur={handleBlur}
-                            helperText={touch.password}
-                            // error={true}
+                            helperText={touched.password && errors.password}
+                            error={
+                                touched.password && errors.password
+                                    ? values.confirmPassword !== values.password
+                                    : false
+                            }
                             placeholder="Please Enter Your Password..."
                         />
                         <InputText
@@ -139,16 +166,33 @@ const Register = () => {
                             onChange={handleChange}
                             value={values.confirmPassword}
                             onBlur={handleBlur}
-                            helperText={touch.confirmPassword}
-                            // error
+                            helperText={
+                                // eslint-disable-next-line no-mixed-operators
+                                touched.confirmPassword && errors.confirmPassword
+                                // eslint-disable-next-line no-mixed-operators
+                                || touched.confirmPassword && values.confirmPassword !== values.password
+                                // eslint-disable-next-line no-mixed-operators
+                                && "Password does not match"
+                            }
+                            error={touched.confirmPassword && errors.confirmPassword
+                                ? true
+                                : false
+                                // eslint-disable-next-line no-mixed-operators
+                                || touched.confirmPassword
+                                // eslint-disable-next-line no-mixed-operators
+                                && values.confirmPassword !== values.password
+                            }
                             placeholder="Please Enter Your Confirm Password..."
                         />
                         <PageChangeBox component="p">
+                            Already have an account?{" "}
                             <TypographyLink to="/auth/login">
                                 Login
                             </TypographyLink>
                         </PageChangeBox>
-                        <FormButton variant="contained" type="submit" endIcon={<SendIcon />}>
+                        <FormButton
+                            disabled={values.confirmPassword !== values.password}
+                            variant="contained" type="submit" endIcon={<SendIcon />}>
                             Send
                         </FormButton>
                     </PageForm>

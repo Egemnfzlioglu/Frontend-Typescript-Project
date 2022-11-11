@@ -23,9 +23,6 @@ const validationSchema = Yup.object({
         .min(3, 'Must be 3 characters or less')
         .max(30, 'Must be 30 characters or less')
         .required('Required'),
-    file: Yup.string()
-        .max(30, 'Must be 30 characters or less')
-
 })
 
 const initialValues = {
@@ -45,8 +42,6 @@ const CardsAdd = () => {
     });
 
     const { handleBlur, handleChange, handleSubmit, values, errors, touched } = formik
-
-    const touch = touched && errors
 
     const handleOnSubmit = (e: React.FormEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -75,8 +70,8 @@ const CardsAdd = () => {
                             onChange={handleChange}
                             value={values.title}
                             onBlur={handleBlur}
-                            helperText={touch.title}
-                            // error={true}
+                            helperText={touched.title && errors.title}
+                            error={touched.title && errors.title ? true : false}
                             placeholder="Please Enter Title..."
                         />
                         <InputText
@@ -91,21 +86,18 @@ const CardsAdd = () => {
                             multiline
                             rows="4"
                             onBlur={handleBlur}
-                            helperText={touch.description}
-                            // error={true}
+                            helperText={touched.description && errors.description}
+                            error={touched.description && errors.description ? true : false}
                             placeholder="Please Enter Description"
                         />
                         <InputText
-                            required
-                            size="small"
+                            size="medium"
                             name="file"
                             id="file"
                             type="file"
                             onChange={handleChange}
                             value={values.file}
                             onBlur={handleBlur}
-                            helperText={touch.file}
-                        // error={true}
                         />
                         <FormButton variant="contained" type="submit" endIcon={<SendIcon />}>
                             Send

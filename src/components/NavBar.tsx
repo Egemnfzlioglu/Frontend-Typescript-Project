@@ -145,7 +145,6 @@ export default function PrimarySearchAppBar() {
                         justifyContent: "space-between",
                         alignItems: "center",
                         position: "sticky",
-                        // backgroundColor: "#eee"
                     }}>
                         <Box sx={{
                             display: "flex",
@@ -217,10 +216,7 @@ export default function PrimarySearchAppBar() {
                                 <IconButton
                                     size="large"
                                     edge="end"
-                                    // aria-label="account of current user"
-                                    // aria-controls={menuId}
                                     aria-haspopup="true"
-                                    // onClick={handleProfileMenuOpen}
                                     color="inherit"
                                 >
                                     <LoginIcon sx={{ color: "#fff" }} />

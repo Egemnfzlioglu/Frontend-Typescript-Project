@@ -41,7 +41,7 @@ const Profile = () => {
                                     }}
                                     alt="Paella dish"
                                 />
-                                <Typographies variant="body1" >Egemen Fazlıoğlu</Typographies>
+                                <Typographies variant="body1" color="text.secondary">Egemen Fazlıoğlu</Typographies>
                             </Grid>
                             <Grid item md={9}>
                                 <Grid container spacing={2}

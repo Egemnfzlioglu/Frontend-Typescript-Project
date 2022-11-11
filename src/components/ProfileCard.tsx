@@ -31,7 +31,7 @@ const ProfileCard: React.FC<abc> = ({ i, a }) => {
                 }}>
                     <Typography variant="subtitle1" color="text.secondary"
                         sx={{
-                            padding: "0 1.5rem ",
+                            textAlign: "center",
                         }}
                     >
                         September 14, 2016
@@ -61,11 +61,13 @@ const ProfileCard: React.FC<abc> = ({ i, a }) => {
 
                         <Typography variant="overline" color="text.secondary"
                             sx={{
-                                margin: "-1rem auto",
+                                textAlign: "center",
                                 fontSize: "0.8rem",
+                                flexGrow: 1,
 
                             }}
                         >23 person liked</Typography>
+
                         <Link to={`/profile/edit/${i}`}>
 
                             <IconButton aria-label="edit">

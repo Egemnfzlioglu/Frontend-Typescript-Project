@@ -22,7 +22,7 @@ margin:2rem auto 0 auto ;
 export const PaperContainer = styled(Paper)`
 width: 100%;
 border-bottom: 3px solid #ddd;
-margin: 7% auto 0 auto ;
+margin: 2% auto ;
 display: flex;
 flex-direction: column;
 padding:0 0 1rem 0;
@@ -54,6 +54,7 @@ margin:0.5rem auto;
 export const PageChangeBox = styled(Box)`
 width: 65%;
 margin:0.5rem auto;
+text-align:center
 
 `
 
