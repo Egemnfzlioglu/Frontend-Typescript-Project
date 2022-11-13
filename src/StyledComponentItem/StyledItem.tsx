@@ -48,11 +48,22 @@ export const FormHeader = styled(Box)`
 min-width: 100%;
 border-bottom: 3px solid #ddd;
 margin:0.5rem auto;
+display: flex;
+align-items: center;
+
+`
+
+export const FormFooter = styled(Box)`
+min-width: 100%;
+display: flex;
+flex-direction:column;
+align-items: center;
+margin:1.5rem auto;
 
 `
 
 export const PageChangeBox = styled(Box)`
-width: 65%;
+width: 100%;
 margin:0.5rem auto;
 text-align:center
 

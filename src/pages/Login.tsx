@@ -35,6 +35,7 @@ const initialValues = {
     password: "",
 }
 
+
 const Login = () => {
 
     const navigate = useNavigate()
@@ -49,7 +50,7 @@ const Login = () => {
                 dispatch(login({ values, navigate }))
             }
             resetForm()
-            error.message = null
+            error.message = ""
         },
     });
 
@@ -110,11 +111,18 @@ const Login = () => {
                                 Sign Up
                             </TypographyLink>
                         </PageChangeBox>
+
                         <FormButton variant="contained"
                             disabled={status === "loading"}
                             type="submit" endIcon={<SendIcon />}>
                             Send
                         </FormButton>
+
+                        {/*  
+                        <FormFooter >
+                           <GoogleAuth />
+                        </FormFooter>
+                         */}
                     </PageForm>
                 </PaperContainer>
             </PageContainer>

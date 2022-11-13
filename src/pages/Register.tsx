@@ -59,6 +59,7 @@ const Register = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { error } = useAppSelector((state) => state.auth)
+    console.log(error)
 
     const formik = useFormik({
         initialValues,
@@ -72,10 +73,6 @@ const Register = () => {
                 dispatch(register({ value, navigate }))
             }
             resetForm()
-            error.message = null
-            console.log(JSON.stringify({
-                firstName, lastName, email, password
-            }, null, 2));
         },
     });
 

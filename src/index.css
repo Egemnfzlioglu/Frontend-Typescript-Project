@@ -2,9 +2,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+
   }
 
   body{
     width: 100%;
 
+  }
+
+  a{
+    color: black;
+    outline: none;
+    border-radius: none !important;
+  }
+
+  p{
+    font-size: 1rem;
+    margin-left: 1rem;
   }
