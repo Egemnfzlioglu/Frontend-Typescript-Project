@@ -21,17 +21,16 @@ type REGİSTER_SUCCESS = PayloadAction<any, string, {
 
 
 
-const localStorageParse = JSON.parse(`${localStorage.getItem("profile")}`)
+const localStorageParse = JSON.parse(`${localStorage.getItem("profile")}`);
 const localStorageRemove = () => localStorage.removeItem("profile")
 
-const initialState: initialStateProps = {
+const initialState: InitialStateAuth = {
   user: null,
   error: {
     message: "",
   },
   status: "idle",
-  loginJSON: localStorageParse
-
+  loginJSON: localStorageParse,
 };
 
 console.log("initialState.error", initialState.error)
@@ -58,6 +57,7 @@ export const authSlice = createSlice({
         state.status = 'idle';
         localStorage.setItem("profile", JSON.stringify({ ...action.payload }))
         state.user = action.payload;
+        state.error.message = ""
       })
       .addCase(login.rejected, (state, action: LOGİN_FAILURE
       ) => {
@@ -74,6 +74,7 @@ export const authSlice = createSlice({
         state.status = 'idle';
         localStorage.setItem("profile", JSON.stringify({ ...action.payload }))
         state.user = action.payload;
+        state.error.message = ""
       })
       .addCase(register.rejected, (state, action: REGİSTER_FAILURE) => {
         state.status = 'failed';
@@ -87,8 +88,6 @@ export const authSlice = createSlice({
 export const selectCount = (state: RootState) => state.auth;
 
 export const { setLogin, setLogout } = authSlice.actions;
-
-
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import SendIcon from '@mui/icons-material/Send';
 import { useFormik } from 'formik';
@@ -11,30 +11,33 @@ import {
     PageForm,
     FormHeader,
     PaperContainer,
-    FormFooter,
+    Image,
 } from '../StyledComponentItem/StyledItem';
 import Tags from './Tags';
 import { toastError } from '../toast/toast';
 import ReactImageFileToBase64 from "react-file-image-to-base64";
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { createPost } from '../features/createThunk/postResponseThunk';
+import { useNavigate, redirect } from 'react-router-dom';
+
 
 const validationSchema = Yup.object({
-    description: Yup.string()
-        .trim()
-        .min(3, 'Must be 3 characters or less')
-        .max(30, 'Must be 30 characters or less')
-        .required('Required'),
     title: Yup.string()
         .trim()
         .min(3, 'Must be 3 characters or less')
-        .max(30, 'Must be 30 characters or less')
+        .max(100, 'Must be 100 characters or less')
+        .required('Required'),
+    description: Yup.string()
+        .trim()
+        .min(20, 'Must be 3 characters or less')
         .required('Required'),
 })
 
-const initialValues = {
+const initialValues: Post = {
     description: "",
     title: "",
-    file: "",
     tags: [],
+    imageFile: ""
 }
 
 const CardAddOrEdit = () => {
@@ -42,24 +45,53 @@ const CardAddOrEdit = () => {
     const [chip, setChip] = useState("")
     const [chipData, setChipData] = useState<string[]>([]);
     const [image, setImage] = useState<string>("");
+    const [imageName, setImageName] = useState<string>("");
 
-    console.log("base64_file", image)
+    const dispatch = useAppDispatch()
+    const { error } = useAppSelector(state => state.post)
+    const { user, loginJSON } = useAppSelector(state => state.auth)
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues,
         validationSchema,
         onSubmit: (values, { resetForm }) => {
-            const { description, title, } = values
-            const lastValues = { description, title, file: image, tags: chipData }
+            const { description, title } = values
+            const lastValues = { description, title, tags: chipData, imageFile: image }
 
-            alert(JSON.stringify(lastValues, null, 2));
+            if (!loginJSON) {
+                toastError("Please Login...You are redirected to the login page in 5 seconds ")
+                setTimeout(() => {
+                    window.location.reload()
+                    redirect("/login")
+                }, 5000);
+
+            } else {
+                if (user?.result?._id) {
+                    if (lastValues) {
+                        const postData = {
+                            name: user?.result?.name,
+                            creator: user?.result?._id,
+                            ...lastValues,
+                        }
+                        dispatch(createPost({ postData, navigate }))
+                    }
+                }
+            }
+
+            console.log(JSON.stringify(
+                {
+                    name: user?.result?.name,
+                    creator: user?.result?._id,
+                    lastValues,
+                }, null, 2));
+
             resetForm()
             setChipData([])
             setChip("")
             setImage("")
         },
     });
-
     const { handleBlur, handleChange, handleSubmit, values, errors, touched } = formik
 
     const handleOnSubmit = (e: React.FormEvent<HTMLDivElement>) => {
@@ -69,7 +101,7 @@ const CardAddOrEdit = () => {
     //============================================================================
 
     const handleTags = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setChip(e.target.value)
+        setChip(e.target.value.trim())
     }
 
     const tagInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -95,8 +127,6 @@ const CardAddOrEdit = () => {
         }
     }
 
-    console.log(chipData)
-
     const handleDelete = (data: string) => {
         setChipData((chips) => chips.filter((chip) => chip !== data))
     };
@@ -104,9 +134,15 @@ const CardAddOrEdit = () => {
 
     const handleOnCompleted = (files: object[] | any[]) => {
         setImage(files[0].base64_file);
+        setImageName(files[0].file_name);
     };
 
     //============================================================================
+
+    useEffect(() => {
+        error && toastError(error);
+    }, [error]);
+
 
     return (
         <>
@@ -120,8 +156,6 @@ const CardAddOrEdit = () => {
                         <FormHeader>
                             <Typographies variant="h4">Add</Typographies>
                         </FormHeader>
-
-
 
                         <InputText
                             required
@@ -165,34 +199,25 @@ const CardAddOrEdit = () => {
                             id="tags"
                             type="text"
                             placeholder="Please Enter tags"
-                            helperText={touched.tags && `use "," to separate tags`}
+                            helperText={`Use "," to separate tags and min 3 max 30 characters or 5 tags`}
                             onChange={handleTags}
                             value={chip}
                             onBlur={handleBlur}
                             onKeyDown={tagInput}
                         />
 
-                        {/* <InputText
-                            size="medium"
-                            name="file"
-                            id="file"
-                            type="file"
-                            onChange={handleChange}
-                            value={values.file}
-                            onBlur={handleBlur}
-                        /> */}
-
-                        <FormFooter>
-
+                        <Image>
                             <ReactImageFileToBase64
                                 multiple={false}
                                 onCompleted={handleOnCompleted}
-                                preferredButtonText="Click Me !"
+                                preferredButtonText="Select file"
                             />
-                        </FormFooter>
+                            <div style={{ margin: "0 1rem" }}
+                            >{imageName ? imageName : "No File Selected"}</div>
+                        </Image>
 
                         <FormButton variant="contained" type="submit" endIcon={<SendIcon />}>
-                            Send
+                            Submit
                         </FormButton>
                     </PageForm>
                 </PaperContainer>

@@ -44,6 +44,8 @@ const ProfileCard: React.FC<abc> = ({ i, a }) => {
                         sx={{
                             padding: "0.5rem",
                             width: "100%",
+                            objectFit: "contain"
+
                         }}
                         alt="Paella dish"
                     />
@@ -79,7 +81,6 @@ const ProfileCard: React.FC<abc> = ({ i, a }) => {
                     {/*  */}
                     <CardContent>
                         <Typography variant="body2" color="text.secondary">
-                            {`${a}  `}
                             This impressive paella is a perfect party dish and a fun meal to cook
                             together with your guests...
                         </Typography>

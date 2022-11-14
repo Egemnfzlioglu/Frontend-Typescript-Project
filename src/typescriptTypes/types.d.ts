@@ -1,4 +1,4 @@
-interface initialStateProps {
+interface InitialStateAuth {
     user: USER | null
     error: ERROR
     status: 'idle' | 'loading' | 'failed';
@@ -66,4 +66,60 @@ interface MenuProps {
     isMenuOpen: boolean
     handleMenuClose: () => void
 }
+
+
+interface InitialStatePost {
+    post: {};
+    posts: CardPostProps[] | any[];
+    userPosts: any[];
+    error: any;
+    status: string;
+
+}
+
+interface Post {
+    description: string;
+    title: string;
+    tags: string[];
+    imageFile: string;
+}
+
+interface PostSlice {
+    postData: Post
+    navigate: NavigateFunction,
+}
+
+
+interface PostSchema {
+    title: String,
+    description: String,
+    name: String,
+    creator: String,
+    tags: [String],
+    imageFile: String,
+    createdAt: Date,
+    likeCount: {
+        type: Number,
+        default: 0
+    }
+}
+
+
+interface CardPost {
+    post: CardPostProps
+}
+
+interface CardPostProps {
+    _id: string,
+    createdAt: string,
+    creator: string,
+    description: string,
+    imageFile: string,
+    name: string,
+    tags: string[],
+    title: string,
+    likeCount: Number,
+}
+
+
 

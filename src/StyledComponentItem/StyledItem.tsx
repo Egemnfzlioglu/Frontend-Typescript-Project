@@ -11,22 +11,31 @@ import Paper from '@mui/material/Paper';
 
 export const PageContainer = styled(Container)`
 width: 100%;
-min-height:60vh;
+height:100% ;
 display: flex;
 justify-content:center;
 align-items: center;
-margin:2rem auto 0 auto ;
+margin:5rem auto 2rem auto ;
 
 `
 
 export const PaperContainer = styled(Paper)`
 width: 100%;
-border-bottom: 3px solid #ddd;
-margin: 2% auto ;
+margin: 2% auto 1% auto ;
 display: flex;
 flex-direction: column;
-padding:0 0 1rem 0;
+padding:0 0 0.75rem 0;
 border-radius:0.75rem;
+
+`
+
+export const HomePaperContainer = styled(Paper)`
+width: 100%;
+margin: -5% auto 1% auto ;
+display: flex;
+flex-direction: column;
+border-radius:0.75rem;
+padding: 1% 1.25% 5% 0
 
 
 `
@@ -53,11 +62,11 @@ align-items: center;
 
 `
 
-export const FormFooter = styled(Box)`
-min-width: 100%;
+export const Image = styled(Box)`
+width: 100%;
 display: flex;
-flex-direction:column;
 align-items: center;
+justify-content:center;
 margin:1.5rem auto;
 
 `

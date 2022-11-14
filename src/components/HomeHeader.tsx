@@ -1,71 +1,111 @@
-import * as React from 'react';
-import { CardMedia, Box, Grid, Card } from '@mui/material';
+import React, { useEffect } from 'react';
+import { CardMedia, Grid, } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-
-
-
-
-
+import { PageContainer, PaperContainer, ProfilePage, Typographies } from '../StyledComponentItem/StyledItem';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { getPosts } from '../features/createThunk/postResponseThunk';
+import Loading from '../components/Loading';
 const HomeHeader = () => {
+
+    const dispatch = useAppDispatch()
+    const { posts, status } = useAppSelector(state => state.post)
+
+    useEffect(() => {
+        dispatch(getPosts())
+    }, [dispatch])
     return (
         <>
-            <Box
-                sx={{
-                    padding: "5%  3% 0 3%",
-                    width: "100% ",
-                }}
-            >
-                <CssBaseline />
-                <Box
-                    sx={{
-                        width: "100% ",
-                        maxHeight: "50vh",
-                        margin: "0 auto ",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-evenly",
-                    }}
-                >
-                    <Card sx={{
-                        width: "100% ",
-                        borderRadius: "2rem",
-                        display: "flex",
-                    }}>
-                        {
-                            Array(3).fill("abc").map((a, i) => (
-                                <Grid key={i} item
-                                    md={4}
-                                    sm={6}
-                                    xs={12}
-                                >
-                                    <Box
+            {
+                status === "loading"
+                    ? <Loading />
+                    :
+                    (
+                        <PageContainer>
+                            <CssBaseline />
+                            <ProfilePage>
+                                <PaperContainer elevation={6}>
+                                    {/* <Grid container spacing={1}
                                         sx={{
-                                            margin: "3%",
-                                            borderRadius: ".75rem",
-                                        }}>
-                                        <CardMedia
-                                            component="img"
-
-                                            height="auto"
-                                            image="https://mymodernmet.com/wp/wp-content/uploads/2019/07/will-burrard-lucas-beetlecam-23.jpg"
+                                            width: "100%",
+                                        }}
+                                    > */}
+                                    <Grid item md={12} >
+                                        <Grid container spacing={1}
                                             sx={{
-                                                maxWidth: {
-                                                    xs: 345, md: 500
-                                                },
-                                                padding: "1rem",
                                                 width: "100%",
-                                                borderRadius: "2rem"
+                                                margin: " 0",
+                                                display: "flex",
                                             }}
-                                            alt="Paella dish"
-                                        />
-                                    </Box>
-                                </Grid>
-                            ))
-                        }
-                    </Card>
+                                        >
+                                            {
+                                                posts.length > 0 ? posts.slice(0, 4).map(post =>
+                                                (
+                                                    <Grid key={post._id} item
+                                                        md={3}
+                                                        sm={4}
+                                                        xs={6}
+                                                        sx={{
+                                                            width: 300,
+                                                            height: 240,
+                                                            padding: "0.5rem",
+                                                        }}
+                                                    >
+                                                        <CardMedia
+                                                            component="img"
+                                                            height="100%"
+                                                            image={`${post?.imageFile
+                                                                ? post?.imageFile
+                                                                : "https://nebosan.com.tr/wp-content/uploads/2018/06/no-image.jpg"}`}
 
-                </Box>
-            </Box>
+                                                            sx={{
+                                                                width: "100%",
+                                                                padding: "0.5rem",
+                                                                margin: "0.25rem auto",
+                                                                borderRadius: "2rem",
+                                                                border: "1px solid #ddd",
+                                                                objectFit: "contain",
+                                                            }}
+                                                            alt="Paella dish"
+                                                        />
+                                                    </Grid>
+                                                )) : (
+                                                    Array(3).fill("abc").map((a, i) => (
+                                                        <Grid key={i} item
+                                                            md={4}
+                                                            sm={6}
+                                                            xs={12}
+                                                        >
+                                                            <CardMedia
+                                                                component="img"
+                                                                image={"https://nebosan.com.tr/wp-content/uploads/2018/06/no-image.jpg"}
+
+                                                                sx={{
+                                                                    maxWidth: {
+                                                                        xs: 345, md: 500
+                                                                    },
+                                                                    maxHeight: {
+                                                                        xs: 345, md: 500
+                                                                    },
+                                                                    padding: "1rem",
+                                                                    borderRadius: "2rem"
+                                                                }}
+
+                                                                alt="Paella dish"
+                                                            />
+                                                        </Grid>
+                                                    ))
+
+                                                )
+                                            }
+
+
+                                        </Grid>
+                                    </Grid>
+                                    {/* </Grid> */}
+                                </PaperContainer>
+                            </ProfilePage>
+                        </PageContainer>)
+            }
         </>
     )
 }

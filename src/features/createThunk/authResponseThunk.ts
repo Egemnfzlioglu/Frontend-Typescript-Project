@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toastSuccess } from '../../toast/toast';
-import * as API from "../auth/API"
+import * as API from "../API/API"
 
 
 

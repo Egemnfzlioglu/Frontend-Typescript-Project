@@ -1,80 +1,133 @@
 import * as React from 'react';
-// import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Avatar from '@mui/material/Avatar';
+import CardHeader from '@mui/material/CardHeader';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import Paper from '@mui/material/Paper';
+import { TypographyLink } from '../StyledComponentItem/StyledItem';
 
-type abc = {
-    i: number;
-    a: string
-}
 
-const Cards: React.FC<abc> = ({ i, a }) => {
+const Cards: React.FC<CardPost> = ({ post }) => {
     return (
         <>
             <Paper elevation={12}
                 sx={{
-                    margin: "1rem auto",
+                    margin: " auto",
                     borderRadius: ".75rem",
+
                 }}>
                 <Card sx={{
                     maxWidth: {
-                        xs: 345, md: 500
+                        xs: 300, md: 500
                     },
-                    borderRadius: "1rem",
+                    borderRadius: ".75rem",
+                    margin: "0 auto",
+
                 }}>
                     <CardHeader
                         avatar={
                             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                R
+                                {post?.name}
                             </Avatar>
                         }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
+                        title={post?.name}
+                        subheader={post?.createdAt}
                     />
                     {/*  */}
                     <CardMedia
                         component="img"
-                        height="auto"
-                        image="https://mymodernmet.com/wp/wp-content/uploads/2019/07/will-burrard-lucas-beetlecam-23.jpg"
+                        image={`${post?.imageFile
+                            ? post?.imageFile
+                            : "https://nebosan.com.tr/wp-content/uploads/2018/06/no-image.jpg"}`}
                         sx={{
-                            padding: "1rem",
-                            width: "100%",
-                            borderRadius: "2rem"
+                            padding: " 0 0.5rem",
+                            maxWidth: {
+                                xs: 250, md: 350
+                            },
+                            height: "250px",
+                            margin: "auto",
+                            objectFit: "contain",
+                            border: "1px solid #ddd",
+                            borderRadius: "0.75rem",
 
                         }}
-                        alt="Paella dish"
+                        alt={post?.name}
                     />
                     {/*  */}
                     <CardActions disableSpacing
                         sx={{
-                            margin: "-0.5rem auto"
+                            margin: "-0.5rem auto -1rem auto",
                         }}
                     >
                         <Typography variant="overline" color="text.secondary"
                             sx={{
                                 marginLeft: "auto"
                             }}
-                        >You and 23 person liked</Typography>
-                        <IconButton aria-label="share">
+                        >{`${post?.likeCount} person liked`}</Typography>
+                        <IconButton aria-label="like">
                             <FavoriteIcon />
                         </IconButton>
                     </CardActions>
                     {/*  */}
-                    <CardContent>
-                        <Typography variant="body1" color="text.secondary">
-                            This impressive paella is a perfect party dish and a fun meal to cook
-                            together with your guests. Add 1 cup of frozen peas along with the mussels,
-                            if you like.
-                        </Typography>
+                    <CardContent
+                        sx={{
+                            height: "25vh",
+
+                        }}
+                    >
+                        {
+                            post?.title?.length > 25 ? (
+                                <TypographyLink to={`/post/${post?.title.replaceAll(" ", "-")}`}
+                                    sx={{
+                                        borderBottom: "1px solid #333",
+                                        margin: "1rem",
+                                    }}>
+                                    <Typography variant="h6" color="text.secondary"
+                                        sx={{
+                                            textTransform: "capitalize",
+                                            textAlign: "center",
+                                            margin: "-1rem 1rem 0.5rem ",
+                                            borderBottom: "1px solid #ddd",
+                                        }}>
+                                        {post?.title.slice(0, 25)} {" "}<span> ...</span>
+                                    </Typography>
+                                </TypographyLink>
+                            ) : (
+                                <Typography variant="h6" color="text.secondary"
+                                    sx={{
+                                        textTransform: "capitalize",
+                                        textAlign: "center",
+                                        margin: "-1rem 1rem 0.5rem ",
+                                        borderBottom: "1px solid #ddd",
+                                    }}>
+                                    {post?.title}
+                                </Typography>
+                            )
+                        }
+                        {
+                            post?.description?.length > 140 ? (
+                                <Typography variant="body1" color="text.secondary">
+                                    {`${post?.description.slice(0, 110)}`}
+                                    <TypographyLink to={`/post/${post?.title?.replaceAll(" ", "-")}`}
+                                        sx={{
+                                            borderBottom: "1px solid #333",
+                                            margin: "1rem",
+                                        }}>
+                                        See more...
+                                    </TypographyLink>
+                                </Typography>
+                            ) : (
+                                <Typography variant="body2" color="text.secondary">
+                                    {post?.description}
+                                </Typography>
+                            )
+                        }
                     </CardContent>
                     {/*  */}
                 </Card >

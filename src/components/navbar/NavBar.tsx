@@ -17,6 +17,7 @@ import RightBar from './NavRightBar';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setLogout } from '../../features/auth/authSlice';
 import { toastSuccess } from '../../toast/toast';
+import { Grid } from '@mui/material';
 
 
 const NavBar = () => {
@@ -182,37 +183,70 @@ const NavBar = () => {
                 flexGrow: 1,
                 margin: "2% auto",
             }}>
-                <AppBar>
-                    <Toolbar sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        position: "sticky",
-                    }}>
-                        <NavLeftBar />
+                <Grid item md={12}>
 
-                        <SearchComponent />
-
-                        <RightBar />
-
-                        <Box
-                            sx={{
-                                display: { xs: 'flex', md: 'none' }
-                            }}>
-                            <IconButton
-                                size="large"
-                                aria-label="show more"
-                                aria-controls={mobileMenuId}
-                                aria-haspopup="true"
-                                onClick={handleMobileMenuOpen}
-                                color="inherit"
+                    <AppBar>
+                        <Toolbar sx={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                            position: "sticky",
+                        }}>
+                            <Grid item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                                sx={{
+                                    width: "100%",
+                                }}
                             >
-                                <MoreIcon />
-                            </IconButton>
-                        </Box>
+                                <NavLeftBar />
+                            </Grid>
 
-                    </Toolbar>
-                </AppBar>
+                            <Grid item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                                sx={{
+                                    width: "100%",
+                                }}
+                            >
+                                <SearchComponent />
+                            </Grid>
+
+                            <Grid item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                                sx={{
+                                    width: "100%",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "flex-end",
+                                    margin: " 0 0.5rem"
+                                }}
+                            >
+                                <RightBar />
+                            </Grid>
+
+                            <Box
+                                sx={{
+                                    display: { xs: 'flex', md: 'none' }
+                                }}>
+                                <IconButton
+                                    size="large"
+                                    aria-label="show more"
+                                    aria-controls={mobileMenuId}
+                                    aria-haspopup="true"
+                                    onClick={handleMobileMenuOpen}
+                                    color="inherit"
+                                >
+                                    <MoreIcon />
+                                </IconButton>
+                            </Box>
+                        </Toolbar>
+                    </AppBar>
+                </Grid>
                 {renderMobileMenu}
                 {renderMenu}
             </Box >

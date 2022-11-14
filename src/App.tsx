@@ -20,26 +20,41 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 function App() {
 
   const dispatch = useAppDispatch()
-  const { loginJSON } = useAppSelector(state => state.auth)
+  const { loginJSON, user } = useAppSelector(state => state.auth)
 
   useEffect(() => {
-    dispatch(setLogin(loginJSON))
+
+    if (loginJSON) {
+      dispatch(setLogin(loginJSON))
+    }
   }, [dispatch, loginJSON])
+
+
 
   return (
     <>
       <BrowserRouter>
         <ToastContainer />
         <NavBar />
-
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
 
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/add" element={<CardAddOrEdit />} />
-          <Route path="/profile/edit/:id" element={<CardAddOrEdit />} />
+          <Route path="/" element={<Home />} />
+          {
+            user?.result._id ? (
+              <>
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/add" element={<CardAddOrEdit />} />
+                <Route path="/profile/edit/:id" element={<CardAddOrEdit />} />
+              </>
+            ) : (
+              <>
+                <Route path="/auth/login" element={<Login />} />
+                <Route path="/auth/register" element={<Register />} />
+                <Route path="/*" element={<Login />} />
+              </>
+            )
+
+          }
 
 
         </Routes>
