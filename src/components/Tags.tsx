@@ -14,7 +14,6 @@ const ListItem = styled('li')(({ theme }) => ({
 }));
 
 const Tags: FC<ChipData> = ({ chipData, handleDelete }) => {
-
     return (
         <Box
             sx={{
@@ -27,17 +26,19 @@ const Tags: FC<ChipData> = ({ chipData, handleDelete }) => {
             }}
             component="ul"
         >
-            {chipData.map((data, key) => {
+            {
+                chipData.map((data, key) => {
 
-                return (
-                    <ListItem key={key}>
-                        <Chip
-                            label={data.trim()}
-                            onDelete={() => handleDelete(data)}
-                        />
-                    </ListItem>
-                );
-            })}
+                    return (
+                        <ListItem key={key}>
+                            <Chip
+                                label={data}
+                                onDelete={() => handleDelete(data)}
+                            />
+                        </ListItem>
+                    );
+                })
+            }
         </Box>
     );
 }

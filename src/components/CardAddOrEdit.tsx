@@ -17,19 +17,19 @@ import Tags from './Tags';
 import { toastError } from '../toast/toast';
 import ReactImageFileToBase64 from "react-file-image-to-base64";
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { createPost } from '../features/createThunk/postResponseThunk';
-import { useNavigate, redirect } from 'react-router-dom';
+import { createPost, updatePost } from '../features/createThunk/postResponseThunk';
+import { useNavigate, redirect, useParams } from 'react-router-dom';
+import { CardMedia } from '@mui/material';
 
 
 const validationSchema = Yup.object({
     title: Yup.string()
         .trim()
         .min(3, 'Must be 3 characters or less')
-        .max(100, 'Must be 100 characters or less')
+        .max(50, 'Must be 50 characters or less')
         .required('Required'),
     description: Yup.string()
-        .trim()
-        .min(20, 'Must be 3 characters or less')
+        .min(20, 'Must be 20 characters or less')
         .required('Required'),
 })
 
@@ -48,9 +48,10 @@ const CardAddOrEdit = () => {
     const [imageName, setImageName] = useState<string>("");
 
     const dispatch = useAppDispatch()
-    const { error } = useAppSelector(state => state.post)
-    const { user, loginJSON } = useAppSelector(state => state.auth)
     const navigate = useNavigate()
+    const { id } = useParams()
+    const { error, userPosts, status, } = useAppSelector(state => state.post)
+    const { user, loginJSON } = useAppSelector(state => state.auth)
 
     const formik = useFormik({
         initialValues,
@@ -74,9 +75,15 @@ const CardAddOrEdit = () => {
                             creator: user?.result?._id,
                             ...lastValues,
                         }
-                        dispatch(createPost({ postData, navigate }))
+                        if (!id) {
+                            dispatch(createPost({ postData, navigate }))
+                        } else {
+                            dispatch(updatePost({ id, postData }))
+                            navigate("/")
+                        }
                     }
                 }
+
             }
 
             console.log(JSON.stringify(
@@ -92,7 +99,7 @@ const CardAddOrEdit = () => {
             setImage("")
         },
     });
-    const { handleBlur, handleChange, handleSubmit, values, errors, touched } = formik
+    const { handleBlur, handleChange, handleSubmit, setValues, resetForm, values, errors, touched } = formik
 
     const handleOnSubmit = (e: React.FormEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -114,10 +121,10 @@ const CardAddOrEdit = () => {
                 }
             } else {
                 if (chipData.length < 5) {
-                    if (chip.length <= 30) {
+                    if (chip.length <= 40) {
                         setChipData(chip.trim().split(","))
                     } else {
-                        return toastError("Max 30 Characters")
+                        return toastError("Max 40 Characters")
                     }
                 } else {
                     toastError("max 5 Tags")
@@ -128,7 +135,9 @@ const CardAddOrEdit = () => {
     }
 
     const handleDelete = (data: string) => {
-        setChipData((chips) => chips.filter((chip) => chip !== data))
+        values.tags
+            ? setChipData((chips) => chips.filter((chip) => chip !== data))
+            : setChipData((chips) => chips.filter((chip) => chip !== data))
     };
     //============================================================================
 
@@ -143,6 +152,25 @@ const CardAddOrEdit = () => {
         error && toastError(error);
     }, [error]);
 
+    useEffect(() => {
+        if (id) {
+            const singlePost = userPosts.find((post) => post._id === id)
+            setValues({ ...singlePost })
+        } else {
+            resetForm()
+            setChipData([])
+            setChip("")
+            setImage("")
+        }
+
+    }, [id, resetForm, setValues, userPosts]);
+
+
+
+
+    console.log("valuesTags", values.tags)
+    console.log("chipData", chipData)
+
 
     return (
         <>
@@ -154,7 +182,7 @@ const CardAddOrEdit = () => {
                         onSubmit={(e) => handleOnSubmit(e)}
                     >
                         <FormHeader>
-                            <Typographies variant="h4">Add</Typographies>
+                            <Typographies variant="h4">{id ? "Edit Post" : "Add Post"}</Typographies>
                         </FormHeader>
 
                         <InputText
@@ -188,7 +216,7 @@ const CardAddOrEdit = () => {
                             placeholder="Please Enter Description"
                         />
                         <Tags
-                            chipData={chipData}
+                            chipData={values.tags ? chipData || values.tags : chipData}
                             handleDelete={handleDelete}
                         />
                         <InputText
@@ -199,14 +227,39 @@ const CardAddOrEdit = () => {
                             id="tags"
                             type="text"
                             placeholder="Please Enter tags"
-                            helperText={`Use "," to separate tags and min 3 max 30 characters or 5 tags`}
+                            helperText={`Use "," to separate tags and min 3 max 40 characters or 5 tags`}
                             onChange={handleTags}
-                            value={chip}
+                            value={values.tags ? chip || values.tags : chip}
                             onBlur={handleBlur}
                             onKeyDown={tagInput}
                         />
-
                         <Image>
+                            {!id ?
+                                <CardMedia
+                                    component="img"
+                                    image={image ?
+                                        image
+                                        : "https://nebosan.com.tr/wp-content/uploads/2018/06/no-image.jpg"}
+
+                                    sx={{
+                                        width: "160px",
+                                        height: "90px",
+                                        objectFit: "contain",
+                                    }}
+                                    alt={`${imageName || values.imageFile}`}
+                                /> : <CardMedia
+                                    component="img"
+                                    image={values.imageFile
+                                        ? image || values.imageFile
+                                        : image || "https://nebosan.com.tr/wp-content/uploads/2018/06/no-image.jpg"}
+
+                                    sx={{
+                                        width: "160px",
+                                        height: "90px",
+                                        objectFit: "contain",
+                                    }}
+                                    alt={`${imageName || values.imageFile}`}
+                                />}
                             <ReactImageFileToBase64
                                 multiple={false}
                                 onCompleted={handleOnCompleted}
@@ -214,10 +267,11 @@ const CardAddOrEdit = () => {
                             />
                             <div style={{ margin: "0 1rem" }}
                             >{imageName ? imageName : "No File Selected"}</div>
+
                         </Image>
 
                         <FormButton variant="contained" type="submit" endIcon={<SendIcon />}>
-                            Submit
+                            {id ? "Update" : " Submit"}
                         </FormButton>
                     </PageForm>
                 </PaperContainer>

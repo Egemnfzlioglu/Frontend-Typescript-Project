@@ -69,7 +69,7 @@ interface MenuProps {
 
 
 interface InitialStatePost {
-    post: {};
+    post: PostSchema;
     posts: CardPostProps[] | any[];
     userPosts: any[];
     error: any;
@@ -91,19 +91,25 @@ interface PostSlice {
 
 
 interface PostSchema {
+    _id: string,
     title: String,
     description: String,
     name: String,
     creator: String,
     tags: [String],
     imageFile: String,
-    createdAt: Date,
-    likeCount: {
-        type: Number,
-        default: 0
-    }
+    createdAt: String,
+    likeCount: Number,
 }
 
+type UpdatedPost = PayloadAction<any>
+
+
+
+interface ProfileCardProps {
+    userPost: PostSchema
+    handleDelete: (id: string) => void
+}
 
 interface CardPost {
     post: CardPostProps

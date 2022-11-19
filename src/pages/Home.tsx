@@ -18,7 +18,7 @@ import Loading from '../components/Loading';
 const Home = () => {
 
     const dispatch = useAppDispatch()
-    const { posts, status } = useAppSelector(state => state.post)
+    const { posts, status, } = useAppSelector(state => state.post)
 
     useEffect(() => {
         dispatch(getPosts())
@@ -50,14 +50,12 @@ const Home = () => {
                                             }}
                                         >
 
-
-
                                             {
-                                                posts.length > 0
+                                                posts && posts.length > 0
                                                     ? posts.map((post) => (
                                                         (
                                                             <Grid key={post._id} item
-                                                                md={4}
+                                                                md={6}
                                                                 sm={6}
                                                                 xs={12}
                                                                 sx={{
@@ -65,14 +63,10 @@ const Home = () => {
                                                                     height: "100%",
                                                                 }}
                                                             >
-
-
                                                                 <Cards post={post} />
-
                                                             </Grid>
                                                         )
-                                                    )
-                                                    )
+                                                    ))
                                                     : (
                                                         <Typographies
                                                             variant="h4"

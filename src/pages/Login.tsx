@@ -117,12 +117,6 @@ const Login = () => {
                             type="submit" endIcon={<SendIcon />}>
                             Send
                         </FormButton>
-
-                        {/*  
-                        <FormFooter >
-                           <GoogleAuth />
-                        </FormFooter>
-                         */}
                     </PageForm>
                 </PaperContainer>
             </PageContainer>
