@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { createPost, updatePost } from '../features/createThunk/postResponseThunk';
 import { useNavigate, redirect, useParams } from 'react-router-dom';
 import { CardMedia } from '@mui/material';
-
+import InputButton from './InputButton';
 
 const validationSchema = Yup.object({
     title: Yup.string()
@@ -41,7 +41,6 @@ const initialValues: Post = {
 }
 
 const CardAddOrEdit = () => {
-
     const [chip, setChip] = useState("")
     const [chipData, setChipData] = useState<string[]>([]);
     const [image, setImage] = useState<string>("");
@@ -50,7 +49,7 @@ const CardAddOrEdit = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { id } = useParams()
-    const { error, userPosts, status, } = useAppSelector(state => state.post)
+    const { error, userPosts, } = useAppSelector(state => state.post)
     const { user, loginJSON } = useAppSelector(state => state.auth)
 
     const formik = useFormik({
@@ -66,7 +65,6 @@ const CardAddOrEdit = () => {
                     window.location.reload()
                     redirect("/login")
                 }, 5000);
-
             } else {
                 if (user?.result?._id) {
                     if (lastValues) {
@@ -83,16 +81,7 @@ const CardAddOrEdit = () => {
                         }
                     }
                 }
-
             }
-
-            console.log(JSON.stringify(
-                {
-                    name: user?.result?.name,
-                    creator: user?.result?._id,
-                    lastValues,
-                }, null, 2));
-
             resetForm()
             setChipData([])
             setChip("")
@@ -106,13 +95,10 @@ const CardAddOrEdit = () => {
         handleSubmit();
     }
     //============================================================================
-
     const handleTags = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setChip(e.target.value.trim())
     }
-
     const tagInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
-
         if (e.key === ",") {
             if (chip.trim().length <= 2) {
                 setChip("")
@@ -140,14 +126,11 @@ const CardAddOrEdit = () => {
             : setChipData((chips) => chips.filter((chip) => chip !== data))
     };
     //============================================================================
-
     const handleOnCompleted = (files: object[] | any[]) => {
         setImage(files[0].base64_file);
         setImageName(files[0].file_name);
     };
-
     //============================================================================
-
     useEffect(() => {
         error && toastError(error);
     }, [error]);
@@ -162,15 +145,7 @@ const CardAddOrEdit = () => {
             setChip("")
             setImage("")
         }
-
     }, [id, resetForm, setValues, userPosts]);
-
-
-
-
-    console.log("valuesTags", values.tags)
-    console.log("chipData", chipData)
-
 
     return (
         <>
@@ -184,7 +159,6 @@ const CardAddOrEdit = () => {
                         <FormHeader>
                             <Typographies variant="h4">{id ? "Edit Post" : "Add Post"}</Typographies>
                         </FormHeader>
-
                         <InputText
                             required
                             size="small"
@@ -264,12 +238,11 @@ const CardAddOrEdit = () => {
                                 multiple={false}
                                 onCompleted={handleOnCompleted}
                                 preferredButtonText="Select file"
+                                CustomisedButton={InputButton}
                             />
                             <div style={{ margin: "0 1rem" }}
                             >{imageName ? imageName : "No File Selected"}</div>
-
                         </Image>
-
                         <FormButton variant="contained" type="submit" endIcon={<SendIcon />}>
                             {id ? "Update" : " Submit"}
                         </FormButton>

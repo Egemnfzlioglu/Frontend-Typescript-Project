@@ -19,7 +19,6 @@ interface ERROR {
     message: string;
 }
 
-
 interface Login {
     email: string;
     password: string;
@@ -59,7 +58,6 @@ interface MobileMenuProps {
     isMobileMenuOpen: boolean
 }
 
-
 interface MenuProps {
     anchorEl: HTMLElement | null
     menuId: string
@@ -67,14 +65,12 @@ interface MenuProps {
     handleMenuClose: () => void
 }
 
-
 interface InitialStatePost {
     post: PostSchema;
     posts: CardPostProps[] | any[];
     userPosts: any[];
     error: any;
     status: string;
-
 }
 
 interface Post {
@@ -89,7 +85,6 @@ interface PostSlice {
     navigate: NavigateFunction,
 }
 
-
 interface PostSchema {
     _id: string,
     title: String,
@@ -103,8 +98,6 @@ interface PostSchema {
 }
 
 type UpdatedPost = PayloadAction<any>
-
-
 
 interface ProfileCardProps {
     userPost: PostSchema

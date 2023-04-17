@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toastSuccess } from '../../toast/toast';
 import * as API from "../API/API"
 
-
 export const createPost = createAsyncThunk(
     "post/createPost",
     async ({ postData, navigate }: PostSlice,
@@ -13,7 +12,6 @@ export const createPost = createAsyncThunk(
             toastSuccess("Post Added Successfully")
             navigate("/")
             return response.data
-
         } catch (error: any) {
             return rejectWithValue(error.response.data)
         }
@@ -26,12 +24,10 @@ export const getPosts = createAsyncThunk(
         try {
             const response = await API.getPosts()
             return response.data
-
         } catch (error: any) {
             return rejectWithValue(error.response.data)
         }
     });
-
 
 export const getPost = createAsyncThunk(
     "post/getPost",
@@ -40,12 +36,10 @@ export const getPost = createAsyncThunk(
         try {
             const response = await API.getPost(id)
             return response.data
-
         } catch (error: any) {
             return rejectWithValue(error.response.data)
         }
     });
-
 
 export const getPostsByUser = createAsyncThunk(
     "post/getPostsByUser",
@@ -54,12 +48,10 @@ export const getPostsByUser = createAsyncThunk(
         try {
             const response = await API.getPostsByUser(userId)
             return response.data
-
         } catch (error: any) {
             return rejectWithValue(error.response.data)
         }
     });
-
 
 export const deletePost = createAsyncThunk(
     "post/deletePost",
@@ -68,9 +60,7 @@ export const deletePost = createAsyncThunk(
         try {
             const response = await API.deletePost(id)
             toastSuccess("Post Deleted Successfully")
-
             return response.data
-
         } catch (error: any) {
             return rejectWithValue(error.response.data)
         }
@@ -84,9 +74,7 @@ export const updatePost = createAsyncThunk(
         try {
             const response = await API.updatePost(id, postData)
             toastSuccess("Post Updated Successfully")
-
             return response.data
-
         } catch (error: any) {
             console.log("error.response", error.response)
             console.log("error.response", error.response.data)

@@ -19,7 +19,6 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../features/createThunk/authResponseThunk';
 import { toastError } from '../toast/toast';
 
-
 const validationSchema = Yup.object({
     email: Yup.string()
         .trim()
@@ -35,9 +34,7 @@ const initialValues = {
     password: "",
 }
 
-
 const Login = () => {
-
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { error, status } = useAppSelector((state) => state.auth)

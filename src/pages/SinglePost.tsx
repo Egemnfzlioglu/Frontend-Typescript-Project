@@ -17,18 +17,12 @@ import Typography from '@mui/material/Typography';
 import { Chip, ListItem } from '@mui/material';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Box from '@mui/material/Box';
-import { Stack } from '@mui/system';
-
-
-
 
 const SinglePost = () => {
-
     const dispatch = useAppDispatch()
     const { id } = useParams()
     const { post } = useAppSelector(state => state.post)
     const { user } = useAppSelector(state => state.auth)
-
 
     useEffect(() => {
         if (id) {
@@ -36,10 +30,6 @@ const SinglePost = () => {
         }
 
     }, [id, dispatch])
-
-    console.log(id)
-    console.log(post)
-    console.log(user)
     return (
         <>
             <PageContainer>
@@ -53,7 +43,6 @@ const SinglePost = () => {
                                         sx={{ textTransform: "capitalize" }}
                                     >{post?.title}</Typographies>
                                 </FormHeader>
-
                                 <Grid container spacing={1}
                                     sx={{
                                         width: "100%",
@@ -77,7 +66,6 @@ const SinglePost = () => {
                                                 sx={{
                                                     textTransform: "capitalize",
                                                     padding: "1rem",
-
                                                 }}>
                                                 created = {user?.result.name}</Typographies>}
                                         <Typographies variant="body1" color="text.secondary"
@@ -88,12 +76,6 @@ const SinglePost = () => {
                                             {moment(`${post?.createdAt}`).fromNow()}
 
                                         </Typographies>
-                                        {/* <Typographies variant="body1" color="text.secondary"
-                                        >email:{user?.result?.email}</Typographies>
-                                        <Typographies variant="body1" color="text.secondary"
-                                        >{user?.result?.name}</Typographies> */}
-
-
                                         <Box
                                             sx={{
                                                 display: 'flex',
@@ -129,7 +111,6 @@ const SinglePost = () => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-
                             </PaperContainer>
                         ) : (
                             <PaperContainer>

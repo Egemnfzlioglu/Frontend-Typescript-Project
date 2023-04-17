@@ -8,7 +8,6 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 
-
 export const PageContainer = styled(Container)`
 width: 100%;
 height:100% ;
@@ -91,7 +90,6 @@ margin:0.5rem auto 0 auto;
 export const InputText = styled(TextField)`
 width: 65%;
 margin:0.5rem auto;
-
 
 `
 

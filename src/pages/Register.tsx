@@ -15,9 +15,8 @@ import {
     PaperContainer
 } from '../StyledComponentItem/StyledItem';
 import { register } from '../features/createThunk/authResponseThunk';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, } from '../app/hooks';
 import { useNavigate } from 'react-router-dom';
-
 
 const validationSchema = Yup.object({
     firstName: Yup.string()
@@ -55,27 +54,21 @@ const initialValues = {
 }
 
 const Register = () => {
-
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const { error } = useAppSelector((state) => state.auth)
-    console.log(error)
 
     const formik = useFormik({
         initialValues,
         validationSchema,
         onSubmit: (values, { resetForm }) => {
             const { firstName, lastName, email, password } = values
-
             const value = { firstName, lastName, email, password }
-
             if (firstName && lastName && email && password) {
                 dispatch(register({ value, navigate }))
             }
             resetForm()
         },
     });
-
     const { handleBlur, handleChange, handleSubmit, values, errors, touched } = formik
 
     const handleOnSubmit = (e: React.FormEvent<HTMLDivElement>) => {

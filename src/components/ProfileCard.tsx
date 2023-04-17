@@ -12,12 +12,7 @@ import { Box, Chip } from '@mui/material';
 import moment from 'moment';
 import { TypographyLink } from '../StyledComponentItem/StyledItem';
 
-
 const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => {
-
-
-
-
     return (
         <>
             <Paper
@@ -25,7 +20,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => 
                 sx={{
                     margin: " auto",
                     borderRadius: ".75rem",
-
                 }}>
                 <Card sx={{
                     maxWidth: {
@@ -33,7 +27,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => 
                     },
                     borderRadius: ".75rem",
                     margin: "0 auto",
-
                 }}>
                     <Box>
                         <CardActions disableSpacing
@@ -46,7 +39,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => 
                             >
                                 <Delete />
                             </IconButton>
-
                             <Typography variant="overline" color="text.secondary"
                                 sx={{
                                     textAlign: "center",
@@ -54,18 +46,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => 
                                     flexGrow: 1,
                                 }}
                             >{`${userPost?.likeCount} person liked`}</Typography>
-
                             <Link to={`/profile/edit/${userPost._id}`}>
-
                                 <IconButton aria-label="edit">
                                     <Edit />
                                 </IconButton>
                             </Link>
-
                         </CardActions>
-
                     </Box>
-                    {/*  */}
                     <CardMedia
                         component="img"
                         image={`${userPost?.imageFile
@@ -80,7 +67,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => 
                         }}
                         alt={`${userPost?.title}`}
                     />
-                    {/*  */}
                     <CardActions disableSpacing
                         sx={{
                             margin: "-0.5rem 5% -1rem 5%",
@@ -97,23 +83,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => 
                             }}>
                             {moment(`${userPost?.createdAt}`).fromNow()}
                         </Typography >
-
-                        {/* <IconButton aria-label="like">
-                            <FavoriteIcon />
-                        </IconButton> */}
-
                     </CardActions>
-
                     {userPost?.tags && userPost?.tags.map((tag, i) => (
-
                         <Typography key={i} variant="overline" color="text.secondary"
                             sx={{ margin: "auto 0.5%" }}
                         >
                             <Chip label={`#${tag}`} />
                         </Typography>
                     ))}
-
-                    {/*  */}
                     <CardContent
                         sx={{
                             height: "25vh",
@@ -122,7 +99,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => 
                     >
                         {
                             userPost?.title?.length > 30 ? (
-
                                 <Typography variant="h6" color="text.secondary"
                                     sx={{
                                         textTransform: "capitalize",
@@ -164,81 +140,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userPost, handleDelete }) => 
                             )
                         }
                     </CardContent>
-                    {/*  */}
                 </Card >
             </Paper>
-
         </>
     );
 }
 
 export default ProfileCard
-
-
-
-/*
-<Paper elevation={12}
-sx={{
-    margin: "1rem",
-    borderRadius: ".75rem",
-}}>
-<Card sx={{
-    maxWidth: {
-        xs: 345, md: 500
-    },
-    borderRadius: ".75rem",
-}}>
-    <Typography variant="subtitle1" color="text.secondary"
-        sx={{
-            textAlign: "center",
-        }}
-    >
-        September 14, 2016
-    </Typography>
-    <CardMedia
-        component="img"
-        height="auto"
-        image={`${userPost.imageFile}`}
-        sx={{
-            padding: "0.5rem",
-            width: "100%",
-            objectFit: "contain"
-
-        }}
-        alt={`${userPost.title}`}
-    />
-    <CardActions disableSpacing
-        sx={{
-            margin: "-0.5rem auto"
-        }}
-    >
-        <IconButton aria-label="share"
-            onClick={() => window.confirm("Emin Misin?")}
-        >
-            <Delete />
-        </IconButton>
-
-        <Typography variant="overline" color="text.secondary"
-            sx={{
-                textAlign: "center",
-                fontSize: "0.8rem",
-                flexGrow: 1,
-
-            }}
-        >{`${userPost.likeCount}`}</Typography>
-
-        <Link to={`/profile/edit/${userPost._id}`}>
-
-            <IconButton aria-label="edit">
-                <Edit />
-            </IconButton>
-        </Link>
-
-    </CardActions>
-    <CardContent>
-        <Typography variant="body2" color="text.secondary">
-            {`${userPost.description}`}
-        </Typography>
-    </CardContent>
-</Card >
-</Paper> */

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -9,21 +9,14 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setLogout } from '../../features/auth/authSlice';
 import { toastSuccess } from '../../toast/toast';
 
-
-
 const RightBar = () => {
-
-    const [show, setShow] = useState(false);
     const dispatch = useAppDispatch()
-
     const { user } = useAppSelector(state => state.auth)
-
 
     const handleLogOut = () => {
         toastSuccess("Logout Successfully")
         dispatch(setLogout())
     }
-
     return (
         <Box
             sx={{
@@ -31,7 +24,6 @@ const RightBar = () => {
                 alignItems: "center",
                 justifyContent: "center",
             }}>
-
             <TypographyLink to="/">
                 <IconButton size="medium" aria-label="">
                     <p style={{
@@ -44,7 +36,6 @@ const RightBar = () => {
                     />
                 </IconButton>
             </TypographyLink>
-
             {
                 user?.result?._id
                     ? (
@@ -61,7 +52,6 @@ const RightBar = () => {
                                     />
                                 </IconButton>
                             </TypographyLink>
-
                             <TypographyLink to="/profile">
                                 <IconButton
                                     size="medium"
@@ -76,7 +66,6 @@ const RightBar = () => {
                                     <AccountCircle sx={{ color: "#fff" }} />
                                 </IconButton>
                             </TypographyLink>
-
                             <TypographyLink to="/auth/login">
                                 <IconButton
                                     size="medium"
@@ -93,7 +82,6 @@ const RightBar = () => {
                                 </IconButton>
                             </TypographyLink>
                         </>
-
                     )
                     : (
                         <TypographyLink to="/auth/login">
@@ -113,7 +101,6 @@ const RightBar = () => {
                     )
             }
         </Box >
-
     )
 }
 

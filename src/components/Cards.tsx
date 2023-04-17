@@ -13,7 +13,6 @@ import { TypographyLink } from '../StyledComponentItem/StyledItem';
 import moment from 'moment';
 import { Chip, Paper } from '@mui/material';
 
-
 const Cards: React.FC<CardPost> = ({ post }) => {
     return (
         <>
@@ -30,7 +29,6 @@ const Cards: React.FC<CardPost> = ({ post }) => {
                         },
                         borderRadius: ".75rem",
                         margin: "0 auto",
-
                     }}>
                     <CardHeader
                         avatar={
@@ -79,7 +77,6 @@ const Cards: React.FC<CardPost> = ({ post }) => {
                             margin: "-0.5rem 5% -1rem 5%",
                         }}
                     >
-
                         <Typography variant="overline" color="text.secondary"
                             sx={{
                                 marginLeft: "auto"
@@ -92,7 +89,6 @@ const Cards: React.FC<CardPost> = ({ post }) => {
                         </IconButton>
                     </CardActions>
                     {post?.tags.length >= 1 ? post?.tags.map((tag, i) => (
-
                         <Typography key={i} variant="overline" color="text.secondary"
                             sx={{ margin: "auto 0.75%" }}
                         >
@@ -106,8 +102,6 @@ const Cards: React.FC<CardPost> = ({ post }) => {
                     >
                         <Chip label={`#Tag None`} />
                     </Typography>)}
-
-
                     <CardContent
                         sx={{
                             height: "25vh",
@@ -156,10 +150,8 @@ const Cards: React.FC<CardPost> = ({ post }) => {
                             )
                         }
                     </CardContent>
-                    {/*  */}
                 </Card >
             </Paper>
-
         </>
     );
 }

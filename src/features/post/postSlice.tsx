@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-    RootState,
-    // AppThunk
-} from '../../app/store';
+import { RootState } from '../../app/store';
 import {
     createPost,
     getPosts,
@@ -50,14 +47,11 @@ const initialState: InitialStatePost = {
     status: "idle",
 };
 
-console.log("initialState.error", initialState.error)
-
 export const postSlice = createSlice({
     name: "post",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-
         // createPost ===============================================================
         builder
             .addCase(createPost.pending, (state) => {
@@ -72,7 +66,6 @@ export const postSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.payload
             });
-
         // getPosts===============================================================
         builder
             .addCase(getPosts.pending, (state) => {
@@ -81,13 +74,11 @@ export const postSlice = createSlice({
             .addCase(getPosts.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.posts = action.payload
-
             })
             .addCase(getPosts.rejected, (state, action
             ) => {
                 state.status = 'failed';
                 state.error = action.payload
-
             });
         // getPost===============================================================
         builder
@@ -97,14 +88,12 @@ export const postSlice = createSlice({
             .addCase(getPost.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.post = action.payload
-
             })
             .addCase(getPost.rejected, (state, action
             ) => {
                 state.status = 'failed';
                 state.error = action.payload
             });
-
         // getPostsByUser===============================================================
         builder
             .addCase(getPostsByUser.pending, (state) => {
@@ -113,13 +102,11 @@ export const postSlice = createSlice({
             .addCase(getPostsByUser.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.userPosts = action.payload
-
             })
             .addCase(getPostsByUser.rejected, (state, action
             ) => {
                 state.status = 'failed';
                 state.error = action.payload
-
             });
         // deletePost===============================================================
         builder
@@ -129,14 +116,10 @@ export const postSlice = createSlice({
             .addCase(deletePost.fulfilled, (state, action) => {
                 state.status = 'idle';
                 const { arg }: any = action.meta
-
-                console.log("action", action)
-                console.log("arg", arg)
                 if (arg) {
                     state.userPosts = state.userPosts.filter(post => post._id !== arg);
                     state.posts = state.posts.filter(post => post._id !== arg);
                 }
-
             })
             .addCase(deletePost.rejected, (state, action
             ) => {
@@ -151,9 +134,6 @@ export const postSlice = createSlice({
             .addCase(updatePost.fulfilled, (state, action) => {
                 state.status = 'idle';
                 const { arg }: any = action.meta
-
-                console.log("action", action)
-                console.log("arg", arg)
                 if (arg) {
                     state.userPosts = state.userPosts.map(post =>
                         post._id === arg ? action.payload : post
@@ -162,7 +142,6 @@ export const postSlice = createSlice({
                         post._id === arg ? action.payload : post
                     );
                 }
-
             })
             .addCase(updatePost.rejected, (state, action
             ) => {

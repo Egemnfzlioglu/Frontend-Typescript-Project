@@ -19,12 +19,8 @@ import { setLogout } from '../../features/auth/authSlice';
 import { toastSuccess } from '../../toast/toast';
 import { Grid } from '@mui/material';
 
-
 const NavBar = () => {
-
-    const [show, setShow] = useState(false);
     const dispatch = useAppDispatch()
-
     const { user } = useAppSelector(state => state.auth)
 
     const handleLogOut = () => {
@@ -104,8 +100,6 @@ const NavBar = () => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-
-            {/*  */}
             <TypographyLink to="/profile/add">
                 <MenuItem>
                     <IconButton
@@ -119,7 +113,6 @@ const NavBar = () => {
                     <p>ADD</p>
                 </MenuItem>
             </TypographyLink>
-
             <TypographyLink to="/profile">
                 <MenuItem onClick={handleProfileMenuOpen}>
                     <IconButton
@@ -135,9 +128,6 @@ const NavBar = () => {
                     <p>Profile</p>
                 </MenuItem>
             </TypographyLink>
-            {/*  */}
-
-
             {
                 user?.result?._id ? (
                     <TypographyLink to="/auth/login">
@@ -170,10 +160,8 @@ const NavBar = () => {
                     </TypographyLink>
                 )
             }
-
         </Menu>
     );
-
     return (
         <Paper elevation={12}
             sx={{
@@ -184,7 +172,6 @@ const NavBar = () => {
                 margin: "2% auto",
             }}>
                 <Grid item md={12}>
-
                     <AppBar>
                         <Toolbar sx={{
                             display: "flex",
@@ -202,7 +189,6 @@ const NavBar = () => {
                             >
                                 <NavLeftBar />
                             </Grid>
-
                             <Grid item
                                 md={4}
                                 sm={6}
@@ -213,7 +199,6 @@ const NavBar = () => {
                             >
                                 <SearchComponent />
                             </Grid>
-
                             <Grid item
                                 md={4}
                                 sm={6}
@@ -228,7 +213,6 @@ const NavBar = () => {
                             >
                                 <RightBar />
                             </Grid>
-
                             <Box
                                 sx={{
                                     display: { xs: 'flex', md: 'none' }

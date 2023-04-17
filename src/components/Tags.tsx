@@ -28,7 +28,6 @@ const Tags: FC<ChipData> = ({ chipData, handleDelete }) => {
         >
             {
                 chipData.map((data, key) => {
-
                     return (
                         <ListItem key={key}>
                             <Chip

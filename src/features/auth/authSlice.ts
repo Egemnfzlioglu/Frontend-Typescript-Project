@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  RootState,
-  // AppThunk
-} from '../../app/store';
+import { RootState } from '../../app/store';
 import { login, register } from "../createThunk/authResponseThunk"
 
 type LOGİN_SUCCESS = PayloadAction<any, string, {
@@ -19,8 +16,6 @@ type REGİSTER_SUCCESS = PayloadAction<any, string, {
   requestStatus: "fulfilled";
 }, never>
 
-
-
 const localStorageParse = JSON.parse(`${localStorage.getItem("profile")}`);
 const localStorageRemove = () => localStorage.removeItem("profile")
 
@@ -32,8 +27,6 @@ const initialState: InitialStateAuth = {
   status: "idle",
   loginJSON: localStorageParse,
 };
-
-console.log("initialState.error", initialState.error)
 
 export const authSlice = createSlice({
   name: "auth",
@@ -48,7 +41,6 @@ export const authSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-
     // LOGIN ===============================================================
     builder.addCase(login.pending, (state) => {
       state.status = 'loading';
@@ -63,9 +55,7 @@ export const authSlice = createSlice({
       ) => {
         state.status = 'failed';
         state.error = action.payload
-
       });
-
     // REGISTER===============================================================
     builder.addCase(register.pending, (state) => {
       state.status = 'loading';
@@ -79,7 +69,6 @@ export const authSlice = createSlice({
       .addCase(register.rejected, (state, action: REGİSTER_FAILURE) => {
         state.status = 'failed';
         state.error = action.payload
-
       });
   },
 });

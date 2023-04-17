@@ -14,11 +14,10 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { getPostsByUser, deletePost } from '../features/createThunk/postResponseThunk';
 import { TypographyLink } from '../StyledComponentItem/StyledItem';
 
-
 const Profile = () => {
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(state => state.auth)
-    const { userPosts, status } = useAppSelector(state => state.post)
+    const { userPosts, } = useAppSelector(state => state.post)
     const userId = user?.result?._id
 
     useEffect(() => {
@@ -33,10 +32,6 @@ const Profile = () => {
         }
     }
 
-    // toastSuccess("Post Update Successfully")
-
-    console.log(userPosts)
-
     return (
         <>
             <PageContainer>
@@ -49,7 +44,6 @@ const Profile = () => {
                                     <Typographies variant="h4"
                                     >Profile</Typographies>
                                 </FormHeader>
-
                                 <Grid container spacing={1}
                                     sx={{
                                         width: "100%",

@@ -4,7 +4,6 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 
-
 const NavLeftBar = () => {
     return (
         <Box sx={{
@@ -12,7 +11,6 @@ const NavLeftBar = () => {
             justifyContent: "space-between",
             alignItems: "center"
         }} >
-
             <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
                 <IconButton
                     size="large"
@@ -30,10 +28,7 @@ const NavLeftBar = () => {
                         MUI
                     </Typography>
                 </IconButton>
-
             </Link>
-
-
         </Box>
     )
 }

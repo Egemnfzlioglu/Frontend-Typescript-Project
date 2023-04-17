@@ -2,8 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toastSuccess } from '../../toast/toast';
 import * as API from "../API/API"
 
-
-
 export const login = createAsyncThunk(
     "auth/login",
     async ({ values, navigate }: LoginSlice,

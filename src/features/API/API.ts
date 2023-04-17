@@ -1,4 +1,3 @@
-
 import axios, { AxiosResponse } from "axios";
 
 const baseURL = "http://localhost:5000"
@@ -24,7 +23,6 @@ if (TOKEN !== "") {
 export const login = (formData: Login) => API.post("/users/login", formData)
 export const register = (formData: Register) => API.post("/users/register", formData)
 
-
 export const getPosts = () => API.get("/post")
 export const getPost = (id: string | undefined) => API.get(`/post/${id}`)
 export const deletePost = (id: string | undefined) => API.delete(`/post/${id}`)
@@ -34,4 +32,3 @@ export const updatePost: any = (id: { id: string | undefined; postData: { descri
 
 export const getPostsByUser = (userId: string | undefined) => API.get(`/post/userPost/${userId}`)
 export const createPost = (postData: Post) => API.post("/post", postData)
-

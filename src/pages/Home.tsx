@@ -13,18 +13,13 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { getPosts } from '../features/createThunk/postResponseThunk';
 import Loading from '../components/Loading';
 
-
-
 const Home = () => {
-
     const dispatch = useAppDispatch()
     const { posts, status, } = useAppSelector(state => state.post)
 
     useEffect(() => {
         dispatch(getPosts())
     }, [dispatch])
-
-    // console.log("a", posts.map(a => a.title.toLowerCase()).sort().join())
 
     return (
         <>
@@ -49,7 +44,6 @@ const Home = () => {
                                                 margin: "auto",
                                             }}
                                         >
-
                                             {
                                                 posts && posts.length > 0
                                                     ? posts.map((post) => (

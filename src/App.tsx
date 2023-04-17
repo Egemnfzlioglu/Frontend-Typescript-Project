@@ -31,8 +31,6 @@ function App() {
     }
   }, [dispatch, loginJSON])
 
-
-
   return (
     <>
       <BrowserRouter>
@@ -49,22 +47,16 @@ function App() {
                 <Route path="/profile/add" element={<CardAddOrEdit />} />
                 <Route path="/profile/edit/:id" element={<CardAddOrEdit />} />
                 <Route path="*" element={<NotFound />} />
-
               </>
             ) : (
               <>
                 <Route path="/auth/login" element={<Login />} />
                 <Route path="/auth/register" element={<Register />} />
                 <Route path="/*" element={<Login />} />
-
               </>
             )
-
           }
-
-
         </Routes>
-
       </BrowserRouter>
     </>
   );

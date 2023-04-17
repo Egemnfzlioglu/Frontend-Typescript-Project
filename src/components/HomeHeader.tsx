@@ -1,34 +1,29 @@
 import React, { useEffect } from 'react';
 import { CardMedia, Grid, } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import { PageContainer, PaperContainer, ProfilePage, Typographies } from '../StyledComponentItem/StyledItem';
+import { PageContainer, PaperContainer, ProfilePage } from '../StyledComponentItem/StyledItem';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { getPosts } from '../features/createThunk/postResponseThunk';
 import Loading from '../components/Loading';
-const HomeHeader = () => {
 
+const HomeHeader = () => {
     const dispatch = useAppDispatch()
     const { posts, status } = useAppSelector(state => state.post)
 
     useEffect(() => {
         dispatch(getPosts())
     }, [dispatch])
+
     return (
         <>
             {
                 status === "loading"
                     ? <Loading />
-                    :
-                    (
+                    : (
                         <PageContainer>
                             <CssBaseline />
                             <ProfilePage>
                                 <PaperContainer elevation={6}>
-                                    {/* <Grid container spacing={1}
-                                        sx={{
-                                            width: "100%",
-                                        }}
-                                    > */}
                                     <Grid item md={12} >
                                         <Grid container spacing={1}
                                             sx={{
@@ -56,7 +51,6 @@ const HomeHeader = () => {
                                                             image={`${post?.imageFile
                                                                 ? post?.imageFile
                                                                 : "https://nebosan.com.tr/wp-content/uploads/2018/06/no-image.jpg"}`}
-
                                                             sx={{
                                                                 width: "100%",
                                                                 padding: "0.5rem",
@@ -78,7 +72,6 @@ const HomeHeader = () => {
                                                             <CardMedia
                                                                 component="img"
                                                                 image={"https://nebosan.com.tr/wp-content/uploads/2018/06/no-image.jpg"}
-
                                                                 sx={{
                                                                     maxWidth: {
                                                                         xs: 345, md: 500
@@ -89,22 +82,18 @@ const HomeHeader = () => {
                                                                     padding: "1rem",
                                                                     borderRadius: "2rem"
                                                                 }}
-
                                                                 alt="Paella dish"
                                                             />
                                                         </Grid>
                                                     ))
-
                                                 )
                                             }
-
-
                                         </Grid>
                                     </Grid>
-                                    {/* </Grid> */}
                                 </PaperContainer>
                             </ProfilePage>
-                        </PageContainer>)
+                        </PageContainer>
+                    )
             }
         </>
     )

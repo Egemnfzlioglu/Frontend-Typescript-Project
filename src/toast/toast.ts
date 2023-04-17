@@ -22,9 +22,6 @@ export const theme: ToastOptions<toastProps> = {
     theme: "colored",
 }
 
-
 export const toastSuccess = (value: any) => toast.success(value, theme)
-
-
 
 export const toastError = (value: any) => toast.error(value, theme)
